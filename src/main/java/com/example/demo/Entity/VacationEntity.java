@@ -1,14 +1,18 @@
 package com.example.demo.Entity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name="Vacation")
@@ -22,6 +26,10 @@ public class VacationEntity {
 	
 	@Column(name="DepartureDate",nullable=false, unique=false)
 	private Date departureDate;
+	
+	@OneToMany(mappedBy="vacation", fetch = FetchType.LAZY,
+			cascade = CascadeType.ALL)
+	private Set<Checklist> item; 
 	
 	public VacationEntity() {
 		

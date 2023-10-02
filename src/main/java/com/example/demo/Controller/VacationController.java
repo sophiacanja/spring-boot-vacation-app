@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.Entity.VacationEntity;
 import com.example.demo.Repository.VacationRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/Vacation")
