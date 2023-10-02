@@ -4,9 +4,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Entity.VacationEntity;
 import com.example.demo.Repository.VacationRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/Vacation")
@@ -36,9 +40,39 @@ public class VacationController {
 		return vacationRepository.findById(vacationId);	
 	}
 	
+	
+	/* takes in request body with this format 
+	 * {
+    	"location": "San Francisco",
+    	"departureDate": "2023-09-22T07:00:00.000+00:00"
+		}
+	 */
 	@PostMapping("/createVacation")
 	public VacationEntity createVacation(@RequestBody VacationEntity vacation) {
 		return vacationRepository.save(vacation);
 	}
+	
+	//updates existing entry with request body, and creates a new entry if given id is not found 
+	@PutMapping("/update/{id}")
+	public VacationEntity updateVacation(@RequestBody VacationEntity vacation, @PathVariable(value="id") int vacationId) {
+		Optional<VacationEntity> currVacation = vacationRepository.findById(vacationId);
+		if(currVacation.isPresent()) {
+			VacationEntity updatedVacation = currVacation.get();
+			updatedVacation.setLocation(vacation.getLocation());
+			updatedVacation.setDepartureDate(vacation.getDepartureDate());
+			return vacationRepository.save(updatedVacation);
+		} else {
+			return vacationRepository.save(vacation);
+		}
+				
+		
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public void deleteVacation(@PathVariable(value="id") int vacationId) {
+		vacationRepository.deleteById(vacationId);
+	}
+	
+	
 	
 }
