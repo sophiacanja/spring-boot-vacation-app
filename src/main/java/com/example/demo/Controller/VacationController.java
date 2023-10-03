@@ -29,7 +29,7 @@ public class VacationController {
 		vacationRepository = repository;
 	}
 	
-	@GetMapping("/getAll")
+	@GetMapping("/")
 	public @ResponseBody List<VacationEntity> getAllVacations(){
 		return vacationRepository.findAll(); 
 	}
@@ -46,13 +46,13 @@ public class VacationController {
     	"departureDate": "2023-09-22T07:00:00.000+00:00"
 		}
 	 */
-	@PostMapping("/createVacation")
+	@PostMapping("/")
 	public VacationEntity createVacation(@RequestBody VacationEntity vacation) {
 		return vacationRepository.save(vacation);
 	}
 	
 	//updates existing entry with request body, and creates a new entry if given id is not found 
-	@PutMapping("/update/{id}")
+	@PutMapping("/{id}")
 	public VacationEntity updateVacation(@RequestBody VacationEntity vacation, @PathVariable(value="id") int vacationId) {
 		Optional<VacationEntity> currVacation = vacationRepository.findById(vacationId);
 		if(currVacation.isPresent()) {
@@ -67,7 +67,7 @@ public class VacationController {
 		
 	}
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public void deleteVacation(@PathVariable(value="id") int vacationId) {
 		vacationRepository.deleteById(vacationId);
 	}

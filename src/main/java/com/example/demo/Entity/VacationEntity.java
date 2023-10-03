@@ -27,9 +27,9 @@ public class VacationEntity {
 	@Column(name="DepartureDate",nullable=false, unique=false)
 	private Date departureDate;
 	
-	@OneToMany(mappedBy="vacation", fetch = FetchType.LAZY,
-			cascade = CascadeType.ALL)
-	private Set<Checklist> item; 
+//	@OneToMany(mappedBy="vacation", fetch = FetchType.LAZY,
+//			cascade = CascadeType.ALL)
+//	private Set<Checklist> item; 
 	
 	public VacationEntity() {
 		

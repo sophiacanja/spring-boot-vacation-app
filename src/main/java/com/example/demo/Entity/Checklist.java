@@ -12,18 +12,22 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="CheckList")
+@Table(name="Checklist")
 public class Checklist {
 
 	@Id
-	@Column(name="VacationId")
-	private int vacationId; 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "checklistId")
+    private int checklistId;
 	
 	@Column(name="Item", length=255, nullable=false, unique=false)
 	private String item; 
 	
+	@Column(name="VacationId")
+	private int vacationId;
+	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false) 
-	@PrimaryKeyJoinColumn(name = "vacationId", referencedColumnName="VacationId")
+	@JoinColumn(name = "vacationId")
 	private VacationEntity vacation; 
 	
 	public Checklist() {
