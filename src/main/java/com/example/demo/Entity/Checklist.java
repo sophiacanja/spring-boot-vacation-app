@@ -15,6 +15,7 @@ import jakarta.persistence.Table;
 @Table(name="Checklist")
 public class Checklist {
 
+	//declare column and relationships of checklistId, vacationId, and vacation obj
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "checklistId")
@@ -23,7 +24,7 @@ public class Checklist {
 	@Column(name="Item", length=255, unique=false)
 	private String item; 
 	
-//	@Column(name="VacationId",unique=false, insertable=false, updatable=false)
+
 	@Column(name="VacationId",unique=false)
 	private Integer vacationId;
 	
@@ -31,11 +32,12 @@ public class Checklist {
 	@JoinColumn(name = "VacationId", insertable=false, updatable=false)
 	private VacationEntity vacation; 
 	
+	//default empty constructor
 	public Checklist() {
 		
 	}
 	
-	
+	//getters and setters
 	public Integer getVacationId() {
 		return vacationId;
 	}

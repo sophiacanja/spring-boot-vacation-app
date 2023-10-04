@@ -41,7 +41,7 @@ public class VacationEntity {
 		this.departureDate = date;
 	}
 	
-	public int getVacationId() {
+	public Integer getVacationId() {
 		return vacationId;
 	}
 	public void setVacationId(Integer vacationId) {

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +26,20 @@ import com.example.demo.Repository.VacationRepository;
 public class ChecklistController {
 	
 	private final ChecklistRepository checklistRepository; 
-	private final VacationRepository vacationRepository;
 	
 	@Autowired ChecklistController(ChecklistRepository repository, VacationRepository vRepository){
 		checklistRepository = repository; 
-		vacationRepository = vRepository; 
 	}
 	
-	//return 422 error or 400 error
+
+	//cannot send 400 error, only returns 500
 	@GetMapping("/{id}")
-	public @ResponseBody Optional<Checklist> getItem(@PathVariable(value="id")int checklistId){
-		return checklistRepository.findById(checklistId);
+	public @ResponseBody ResponseEntity<Checklist> getItem(@PathVariable(value="id")int checklistId){
+		Checklist checklistObj = checklistRepository.findById(checklistId).get();
+		if(checklistObj != null) {
+			return ResponseEntity.ok(checklistObj);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 	}
 	
 	@GetMapping("/")
