@@ -18,32 +18,36 @@ public class Checklist {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "checklistId")
-    private int checklistId;
+    private Integer checklistId;
 	
-	@Column(name="Item", length=255, nullable=false, unique=false)
+	@Column(name="Item", length=255, unique=false)
 	private String item; 
 	
-	@Column(name="VacationId")
-	private int vacationId;
+//	@Column(name="VacationId",unique=false, insertable=false, updatable=false)
+	@Column(name="VacationId",unique=false)
+	private Integer vacationId;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false) 
-	@JoinColumn(name = "vacationId")
+	@ManyToOne(fetch = FetchType.EAGER) 
+	@JoinColumn(name = "VacationId", insertable=false, updatable=false)
 	private VacationEntity vacation; 
 	
 	public Checklist() {
 		
 	}
 	
-	public Checklist(VacationEntity vacation, String item) {
-		this.vacationId = vacation.getVacationId(); 
-		this.item = item; 
-	}
 	
-	public int getVacationId() {
+	public Integer getVacationId() {
 		return vacationId;
 	}
-	public void setVacationId(int vacationId) {
+	public void setVacationId(Integer vacationId) {
 		this.vacationId = vacationId;
+	}
+	
+	public VacationEntity getVacation() {
+		return this.vacation; 
+	}
+	public void setVacation(VacationEntity vacation) {
+		this.vacation = vacation;
 	}
 	public String getItem() {
 		return item; 
@@ -51,5 +55,10 @@ public class Checklist {
 	public void setItem(String item) {
 		this.item = item;
 	}
-	
+	public Integer getChecklistId() {
+		return this.checklistId;
+	}
+	public void setChecklistId(Integer checklistId) {
+		this.checklistId = checklistId;
+	}
 }

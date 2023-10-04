@@ -11,5 +11,6 @@ import com.example.demo.Entity.VacationEntity;
 
 public interface ChecklistRepository extends JpaRepository<Checklist, Integer>{
 
-	List<Checklist> findByVacation(VacationEntity vacation, Sort sort);
+	//todo: make async
+	List<Checklist> findByVacationId(int vacationId);
 }

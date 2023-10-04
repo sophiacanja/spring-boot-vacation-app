@@ -19,7 +19,8 @@ import java.util.Set;
 public class VacationEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int vacationId;
+	@Column(name= "VacationId")
+	private Integer vacationId;
 	
 	@Column(name="Location", length=255, nullable=false, unique=false)
 	private String location;
@@ -43,7 +44,7 @@ public class VacationEntity {
 	public int getVacationId() {
 		return vacationId;
 	}
-	public void setVacationId(int vacationId) {
+	public void setVacationId(Integer vacationId) {
 		this.vacationId = vacationId;
 	}
 	public String getLocation() {

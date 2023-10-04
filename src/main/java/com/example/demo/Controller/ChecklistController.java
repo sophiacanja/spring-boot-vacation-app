@@ -12,25 +12,43 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Entity.Checklist;
 import com.example.demo.Repository.ChecklistRepository;
+import com.example.demo.Repository.VacationRepository;
 
 @RestController 
 @RequestMapping("/Checklist")
 public class ChecklistController {
 	
 	private final ChecklistRepository checklistRepository; 
+	private final VacationRepository vacationRepository;
 	
-	@Autowired ChecklistController(ChecklistRepository repository){
+	@Autowired ChecklistController(ChecklistRepository repository, VacationRepository vRepository){
 		checklistRepository = repository; 
+		vacationRepository = vRepository; 
 	}
 	
-	@GetMapping("/getItems/{id}")
-	public @ResponseBody Optional<Checklist> getAllItems(@PathVariable(value="id")int vacationId){
-		return checklistRepository.findById(vacationId);
+	//return 422 error or 400 error
+	@GetMapping("/{id}")
+	public @ResponseBody Optional<Checklist> getItem(@PathVariable(value="id")int checklistId){
+		return checklistRepository.findById(checklistId);
+	}
+	
+	@GetMapping("/")
+	public @ResponseBody List<Checklist> getAllItems(@RequestParam(required = false) Integer vacationId){
+		if(vacationId != null) {
+			return checklistRepository.findByVacationId(vacationId) ;
+		}
+		return checklistRepository.findAll();
+	}
+	
+	@PostMapping("/")
+	public Checklist addToChecklist(@RequestBody Checklist item) {
+			return checklistRepository.save(item);
 	}
 	
 
