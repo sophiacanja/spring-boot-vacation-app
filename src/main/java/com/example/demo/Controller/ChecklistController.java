@@ -35,29 +35,28 @@ public class ChecklistController {
 	}
 	
 
-	//cannot send 400 error, only returns 500
+	
 	@GetMapping("/{id}")
 	public @ResponseBody ResponseEntity<ChecklistDto> getItem(@PathVariable(value="id")int checklistId){
 		try{
 			ChecklistDto checklistDto = checklistService.getItem(checklistId);
 			return ResponseEntity.ok(checklistDto);
+			
 		}catch (Exception e){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
 	}
 	
-//	@GetMapping("/")
-//	public @ResponseBody List<Checklist> getAllItems(@RequestParam(required = false) Integer vacationId){
-//		if(vacationId != null) {
-//			return checklistRepository.findByVacationId(vacationId) ;
-//		}
-//		return checklistRepository.findAll();
-//	}
-//	
-//	@PostMapping("/")
-//	public Checklist addToChecklist(@RequestBody Checklist item) {
-//			return checklistRepository.save(item);
-//	}
+	//http://localhost:8080/Checklist/?vacationId=
+	@GetMapping("/")
+	public @ResponseBody List<ChecklistDto> getAllItems(@RequestParam(required = false) Integer vacationId){
+		return checklistService.getAllItems(vacationId);
+	}
+	
+	@PostMapping("/")
+	public ChecklistDto addToChecklist(@RequestBody Checklist checklistObj) {
+			return checklistService.addToChecklist(checklistObj);
+	}
 	
 
 }
