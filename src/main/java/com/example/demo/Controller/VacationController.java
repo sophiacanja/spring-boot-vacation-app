@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,6 +35,7 @@ public class VacationController {
 		return vacationRepository.findAll(); 
 	}
 	
+	//http://localhost:8080/Vacation/?vacationId=
 	@GetMapping("/{id}")
 	public Optional<VacationEntity> getVacation(@PathVariable(value="id")int vacationId) {
 		return vacationRepository.findById(vacationId);	
